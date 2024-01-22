@@ -21,9 +21,16 @@ v0.0.1 by Youssef | dark-lime-0
 print(logo)
 
 domain=input("Enter Your Website Link : ")
-wb_headers=requests.get(domain).headers
 headers=['Strict-Transport-Security','Content-Security-Policy','X-Frame-Options','X-Content-Type-Options','Referrer-Policy','Permissions-Policy']
+
+try :
+        wb_headers=requests.get(domain).headers
+
+except requests.RequestException as e:
+    print(f"Error: {e}")
+    exit()
 print("\n")
+
 b=0
 for a in headers:
     if a not in wb_headers:
@@ -31,4 +38,4 @@ for a in headers:
         b+=1
 
 if(b !=0):print("\nYour Website May Vulnerable to *Clickjacking* Vulnerability !! ")
-else:print("\nAll Great !!")
+else: print("All headers present.")
